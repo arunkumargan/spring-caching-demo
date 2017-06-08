@@ -1,0 +1,8 @@
+spring:
+  cache:
+    cache-names: messages
+    
+    
+management:
+  security:
+    enabled: false
