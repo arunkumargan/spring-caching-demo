@@ -1,0 +1,16 @@
+---
+applications:
+  - name: caching-demo
+    path: caching-app/build/libs/caching-app-0.0.2-SNAPSHOT.jar
+    memory: 1G
+    env:
+      JAVA_OPTS: -Djava.security.egd=file:/dev/./urandom
+      SPRING_PROFILES_ACTIVE: cloud,redis
+
+buildpack: https://github.com/cloudfoundry/java-buildpack.git
+
+env:
+    JBP_CONFIG_SPRING_AUTO_RECONFIGURATION: '{enabled: false}'
+    
+services:
+  - caching-demo-redis

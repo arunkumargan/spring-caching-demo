@@ -55,7 +55,7 @@ $ keys *
 Start the application using "redis" Spring profile the following way:
 [source,bash]
 ----
-./gradlew clean bootRun -Dspring.profiles.active=cloud,redis
+./gradlew clean bootRun -Dspring.profiles.active=redis
 ----
 
 After running the curl command a few times, validate the content in redis
