@@ -9,8 +9,8 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
-import sample.cache.Message;
-import sample.cache.ResponseMessage;
+import sample.cache.model.Message;
+import sample.cache.model.ResponseMessage;
 
 import java.util.concurrent.atomic.AtomicInteger;
 

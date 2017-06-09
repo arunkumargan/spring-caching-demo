@@ -1,12 +1,12 @@
 package sample.cache.service;
 
 import org.springframework.cache.annotation.Cacheable;
-import sample.cache.Message;
-import sample.cache.ResponseMessage;
+import sample.cache.model.Message;
+import sample.cache.model.ResponseMessage;
 
 public interface MessageHandler {
 
-    @Cacheable(cacheNames = "messages")
+    @Cacheable(cacheNames = "messages", key = "#request.id")
     ResponseMessage handle(Message request);
 
 }

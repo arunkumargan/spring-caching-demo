@@ -1,0 +1,3 @@
+gemfire:
+  host: localhost
+  port: 10334

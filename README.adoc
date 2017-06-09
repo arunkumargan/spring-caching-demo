@@ -1,0 +1,104 @@
+= Spring Caching Abstraction Demo
+
+This is a demo application to show the http://docs.spring.io/spring-boot/docs/1.5.4.RELEASE/reference/htmlsingle/#boot-features-caching[caching abstraction] feature in Spring framework.
+The application uses a memory based, Redis and Gemfire as the Cache implementations.
+
+
+== Details of the application
+
+The application exposes an endpoint which takes a request of the following form using cURL:
+
+[source,bash]
+----
+curl -X "POST" "http://localhost:8080/handle" \
+     -H "Accept: application/json" \
+     -H "Content-Type: application/json" \
+     -d $'{
+	"id": "200",
+	"payload": "sample data",
+	"delay": "3000",
+	"fail": false
+}' -w %{time_connect}:%{time_starttransfer}:%{time_total}
+----
+
+
+The behavior expected is that the first response is delayed by the "delay" parameter in milliseconds specified in the request,
+and the subsequent requests should be very quick - the response is cached using the "id" parameter specified in the body of the request.
+
+
+== Testing with an in-memory cache implementation
+
+Start the application using the following command:
+
+[source,bash]
+----
+./gradlew clean bootRun
+----
+
+== Testing with a Redis Store
+
+Ensure that Redis is running, or start it the following way:
+[source,bash]
+----
+redis-server
+----
+
+Connect to Redis using cli:
+[source,bash]
+----
+redis-cli
+
+# List keys
+$ keys *
+----
+
+Start the application using "redis" Spring profile the following way:
+[source,bash]
+----
+./gradlew clean bootRun -Dspring.profiles.active=cloud,redis
+----
+
+After running the curl command a few times, validate the content in redis
+
+[source,bash]
+----
+redis-cli
+
+# List keys
+$ keys *
+----
+
+== Testing with Gemfire
+
+Ensure that Gemfire is started up locally the following way:
+[source,bash]
+----
+gfsh
+
+# start locator
+gfsh> start locator --name=locator1
+
+# Set server to understand pdx serializable format
+gfsh> configure pdx --read-serialized=true
+
+# start server
+gfsh> start server --name=server1
+
+# create region
+gfsh> create region --name=messages --type=PARTITION_REDUNDANT --entry-idle-time-expiration=500 --entry-idle-time-expiration-action=INVALIDATE --enable-statistics=true
+
+----
+
+
+Start the application using "pcc" Spring profile the following way:
+[source,bash]
+----
+./gradlew clean bootRun -Dspring.profiles.active=cloud,pcc
+----
+
+After running the curl command a few times, validate that the content shows up in gemfire
+
+[source,bash]
+----
+gfsh>query --query="select * from /messages"
+----

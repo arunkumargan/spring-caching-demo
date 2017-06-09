@@ -1,0 +1,19 @@
+apply plugin: 'org.springframework.boot'
+
+dependencies {
+	compile('org.springframework.boot:spring-boot-starter-actuator')
+	compile('org.springframework.boot:spring-boot-starter-cache')
+	compile('io.projectreactor:reactor-core:3.0.5.RELEASE')
+	compile('org.springframework.boot:spring-boot-starter-data-gemfire')
+	compile('org.springframework.boot:spring-boot-starter-web')
+	compile('org.springframework.boot:spring-boot-starter-data-redis')
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+	compile("org.jetbrains.kotlin:kotlin-stdlib-jre8:${kotlinVersion}")
+	compile("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")
+	compile project(":caching-model")
+//	compile("redis.clients:jedis")
+}
+
+bootRun {
+	systemProperties = System.getProperties()
+}
