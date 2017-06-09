@@ -18,7 +18,7 @@ curl -X "POST" "http://localhost:8080/handle" \
 	"payload": "sample data",
 	"delay": "3000",
 	"fail": false
-}' -w %{time_connect}:%{time_starttransfer}:%{time_total}
+}' -w "\n%{time_connect}:%{time_starttransfer}:%{time_total}\n"
 ----
 
 
