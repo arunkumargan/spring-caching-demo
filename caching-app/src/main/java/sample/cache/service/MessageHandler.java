@@ -6,7 +6,7 @@ import sample.cache.model.ResponseMessage;
 
 public interface MessageHandler {
 
-    @Cacheable(cacheNames = "messages", key = "#request.id")
+    @Cacheable(cacheNames = "messages", key = "#p0.id")
     ResponseMessage handle(Message request);
 
 }

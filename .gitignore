@@ -9,3 +9,4 @@ bin/
 .gradle
 build/
 classes/
+dump.rdb
